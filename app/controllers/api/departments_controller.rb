@@ -1,4 +1,5 @@
 class Api::DepartmentsController < ApplicationController
+  before_action :set_department, only: [:show, :update, :destroy]
   def index
     render json: Department.all
   end
@@ -8,7 +9,7 @@ class Api::DepartmentsController < ApplicationController
   end
 
   def create
-    department = department.new(product_params)
+    department = department.new(department_params)
 
     if department.save
       render json: department
@@ -18,10 +19,10 @@ class Api::DepartmentsController < ApplicationController
   end
 
   def update
-    if @department.update(product_params)
+    if @department.update(department_params)
       render json: @department
     else
-      render json: @department.errors, status 422
+      render json: @department.errors, status: 422
     end
   end
 

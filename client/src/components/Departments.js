@@ -1,12 +1,16 @@
 import React from "react";
-import { Card, Header, } from "semantic-ui-react";
+import { Link, } from "react-router-dom"
+import { Button, Card, Header, } from "semantic-ui-react";
+import axios from "axios"
 
 class Departments extends React.Component {
   state = { departments: [], };
 
   componentDidMount() {
-    // TODO: Make GET request with axios
-    // TODO: Update state
+    axios.get("/api/departments")
+    .then( res =>{
+      this.setState({departments: res.data,})
+    } )
   }
 
   renderDepartments = () => {
@@ -18,10 +22,8 @@ class Departments extends React.Component {
       <Card>
         <Card.Content>
           <Card.Header>{ department.name }</Card.Header>
-          <Card.Meta>{ department.department }</Card.Meta>
-          <Card.Description>
-            { department.description }
-          </Card.Description>
+
+
         </Card.Content>
       </Card>
     ))
@@ -30,7 +32,12 @@ class Departments extends React.Component {
   render() {
     return (
       <div>
-        <Header as="h1">Department</Header>
+        <Header as="h1">Departments</Header>
+        <br />
+        <Button as={Link} color="red" to="/departments/new" >
+          Add Department
+        </Button>
+        
         <br />
         <Card.Group>
           { this.renderDepartments() }
